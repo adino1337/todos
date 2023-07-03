@@ -1,6 +1,6 @@
 import React from 'react';
-import TodoList from './TodoList'
-import Form from './Form'
+import TodoList from './components/TodoList'
+import Form from './components/Form'
 class TodoApp extends React.Component {
   constructor(props) {
     super(props);
@@ -8,57 +8,11 @@ class TodoApp extends React.Component {
       items: [],
       text: ''
     };
-
-    this.handleChange = this.handleChange.bind(this);
+    this.handleAddItem.bind(this);
   }
 
-  render() {
-    return (
-      <div>
-        <h3>TODO</h3>
-        <TodoList
-          items={this.state.items}
-          onClick={this.handleDelete}
-        />
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="new-todo">
-            What needs to be done?
-          </label>
-          <input
-            id="new-todo"
-            onChange={this.handleChange}
-            value={this.state.text}
-          />
-          <button>
-            Add #{this.state.items.length + 1}
-          </button>
-        </form>
-      </div>
-    );
-  }
-
-  // 1. Prepis handleChange ako arrow function. done
-  handleChange = (e) => {
-    this.setState({ text: e.target.value });
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    if (!this.state.text.length) {
-      return;
-    }
-    const newItem = {
-      text: this.state.text,
-      id: Date.now()
-    };
-    this.setState(state => {
-      // 2. Zapracuj pridanie polozky newItem do pola items. done
-      let items = state.items.concat(newItem);
-      return {
-        items,
-        text: ''
-      };
-    });
+  handleAddItem = (newItemm) => {
+    this.setState(state => ({...state, items: [...state.items, newItemm ]}));
   }
 
   handleDelete = (item) => {
@@ -71,6 +25,22 @@ class TodoApp extends React.Component {
         items
       }
     });
+  }
+
+  render() {
+    return (
+      <div>
+        <h3>TODO</h3>
+        <TodoList
+          items={this.state.items}
+          onClick={this.handleDelete}
+        />
+        <Form
+          items={this.state.items}
+          submit = {this.handleAddItem}
+        />
+      </div>
+    );
   }
 }
 
