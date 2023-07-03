@@ -6,7 +6,6 @@ class TodoApp extends React.Component {
     super(props);
     this.state = {
       items: [],
-      text: ''
     };
     this.handleAddItem.bind(this);
   }

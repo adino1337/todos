@@ -4,9 +4,9 @@ class Form extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          items: props.items,
           text: '',
         };
+        this.props = props
         this.submit = props.submit
         this.handleChange = this.handleChange.bind(this);
       }
@@ -22,7 +22,7 @@ class Form extends React.Component {
             value={this.state.text}
           />
           <button>
-            Add #{this.state.items.length + 1}
+            Add #{this.props.items.length + 1}
           </button>
         </form>
       );
@@ -48,7 +48,6 @@ class Form extends React.Component {
 
       this.submit(newItem)
       return {
-        items: state.items.concat(newItem),
         text: ''
       };
     });
