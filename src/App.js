@@ -1,5 +1,6 @@
 import React from 'react';
-
+import TodoList from './TodoList'
+import Form from './Form'
 class TodoApp extends React.Component {
   constructor(props) {
     super(props);
@@ -36,8 +37,8 @@ class TodoApp extends React.Component {
     );
   }
 
-  // 1. Prepis handleChange ako arrow function.
-  handleChange(e) {
+  // 1. Prepis handleChange ako arrow function. done
+  handleChange = (e) => {
     this.setState({ text: e.target.value });
   }
 
@@ -51,9 +52,8 @@ class TodoApp extends React.Component {
       id: Date.now()
     };
     this.setState(state => {
-      // 2. Zapracuj pridanie polozky newItem do pola items.
-      let items = state.items;
-
+      // 2. Zapracuj pridanie polozky newItem do pola items. done
+      let items = state.items.concat(newItem);
       return {
         items,
         text: ''
@@ -63,9 +63,10 @@ class TodoApp extends React.Component {
 
   handleDelete = (item) => {
     this.setState(state => {
-      // 3. Zapracuj zmazanie polozky item z pola items.
-      let items = state.items;
 
+      // 3. Zapracuj zmazanie polozky item z pola items. done
+      let items = state.items;
+      items = items.filter(itemFilter => itemFilter.id !== item.id)
       return {
         items
       }
@@ -73,17 +74,5 @@ class TodoApp extends React.Component {
   }
 }
 
-// 4. Vytvor samostatny modul pre komponent TodoList a nasledne ho importuj v App.js.
-class TodoList extends React.Component {
-  render() {
-    return (
-      <ul>
-        {this.props.items.map(item => (
-          <li key={item.id} onClick={(e) => this.props.onClick(item)}>{item.text}</li>
-        ))}
-      </ul>
-    );
-  }
-}
 
 export default TodoApp;
