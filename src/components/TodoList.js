@@ -6,7 +6,7 @@ class TodoList extends React.Component {
       return (
         <ul>
           {this.props.items.map(item => (
-            <li key={item.id} onClick={(e) => this.props.onClick(item)}>{item.text}</li>
+            <li className={item.deleted && "delete"} key={item.id} onClick={(e) => this.props.onClick(item)}>{item.text}</li>
           ))}
         </ul>
       );

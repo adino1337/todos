@@ -14,14 +14,12 @@ class TodoApp extends React.Component {
     this.setState(state => ({...state, items: [...state.items, newItemm ]}));
   }
 
-  handleDelete = (item) => {
+  handleDelete = (itemToDelete) => {
     this.setState(state => {
-
       // 3. Zapracuj zmazanie polozky item z pola items. done
-      let items = state.items;
-      items = items.filter(itemFilter => itemFilter.id !== item.id)
+      itemToDelete.deleted = !itemToDelete.deleted;
       return {
-        items
+        items: state.items
       }
     });
   }

@@ -41,7 +41,8 @@ class Form extends React.Component {
     }
     const newItem = {
       text: this.state.text,
-      id: Date.now()
+      id: Date.now(),
+      deleted: false
     };
     this.setState(state => {
       // 2. Zapracuj pridanie polozky newItem do pola items. done
