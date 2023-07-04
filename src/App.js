@@ -1,11 +1,15 @@
 import React from 'react';
 import TodoList from './components/TodoList'
 import Form from './components/Form'
+import Nav from './components/Nav'
+
 class TodoApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
+      name: "",
+      isLogged: false,
     };
     this.handleAddItem.bind(this);
   }
@@ -23,11 +27,15 @@ class TodoApp extends React.Component {
       }
     });
   }
-
   render() {
     return (
       <div>
-        <h3>TODO</h3>
+        <Nav
+          isLogged={this.state.isLogged}
+          name={this.state.name}                  
+        />
+        <h1>ToDo's</h1>
+        <div className='wrapper'>
         <TodoList
           items={this.state.items}
           onClick={this.handleDelete}
@@ -36,6 +44,7 @@ class TodoApp extends React.Component {
           items={this.state.items}
           submit = {this.handleAddItem}
         />
+        </div>
       </div>
     );
   }

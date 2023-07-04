@@ -12,15 +12,16 @@ class Form extends React.Component {
       }
     render() {
       return (
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="new-todo">
-            What needs to be done?
-          </label>
+      <form className='toDoForm' onSubmit={this.handleSubmit}>
+        <div className='input'>
           <input
             id="new-todo"
             onChange={this.handleChange}
-            value={this.state.text}
+            value={this.state.text}    
+            required              
           />
+          <span className='placeholder'>New todo</span>
+          </div>
           <button>
             Add #{this.props.items.length + 1}
           </button>
