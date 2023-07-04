@@ -2,12 +2,12 @@ const Todo = require('../models/Todo')
 
 const getAllTodos = async (req, res) => {
     const tasks = await Todo.find({})
-    res.status(200).json({ tasks })
+    res.status(200).json({code:200,data: tasks })
   }
   
 const addTodo = async (req, res) => {
   const todo = await Todo.create(req.body)
-  res.status(201).json({ todo })
+  res.status(201).json({code:201,data: todo })
 }
 
 const updateTodo = async (req, res) => {

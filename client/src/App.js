@@ -13,7 +13,14 @@ class TodoApp extends React.Component {
     };
     this.handleAddItem.bind(this);
   }
-
+  componentDidMount = () => {  
+    (async () => {	
+      const response = await fetch("http://localhost:5000/todos");
+      const todos = await response.json();
+      console.log(todos.data);
+      this.setState({items: todos.data});
+    })()
+  }
   handleAddItem = (newItemm) => {
     this.setState(state => ({...state, items: [...state.items, newItemm ]}));
   }
