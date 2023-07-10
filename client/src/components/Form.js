@@ -42,7 +42,6 @@ class Form extends React.Component {
     }
     const newItem = {
       text: this.state.text,
-      id: Date.now(),
       deleted: false
     };
     this.setState(state => {

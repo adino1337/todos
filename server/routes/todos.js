@@ -4,6 +4,6 @@ const {getAllTodos,addTodo,updateTodo} = require('../controllers/tasks');
 
 
 router.route('/').get(getAllTodos).post(addTodo);
-router.route('/:id').patch(updateTodo);
+router.route('/:id').put(updateTodo);
 
 module.exports = router
