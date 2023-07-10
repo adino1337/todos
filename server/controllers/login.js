@@ -9,7 +9,7 @@ const login = async (req, res) => {
         email = email.toLowerCase();
         // Validate user input
         if (!(email && password)) {
-          res.status(400).send("All input is required");
+          res.status(400).json({code:400, message: "All input is required"});
         }
         // Validate if user exist in our database
         const user = await User.findOne({ email });
@@ -27,11 +27,11 @@ const login = async (req, res) => {
           const userObject = user.toObject(); // Skonvertovať na plain JavaScript objekt
     userObject.token = token; // Pridať vlastnosť token
 
-    res.status(200).json(userObject);
+    return res.status(200).json({code: 200, userObject});
         }
-        res.status(400).send("Invalid Credentials");
+        return res.status(400).json({code:400, message: "Invalid Credentials"});
       } catch (err) {
-        console.log(err);
+        return res.status(500).json({code: 500, message: err.message})
       }
 }
 

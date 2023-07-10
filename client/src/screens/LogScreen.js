@@ -8,7 +8,6 @@ class LogScreen extends React.Component {
         this.state = {
             logForm: false,      
           };
-        this.props = props;
     }
     showLoginForm = () => {
         this.setState({logForm: true});
@@ -23,7 +22,14 @@ class LogScreen extends React.Component {
                     <a onClick={this.showLoginForm}>Login</a>
                     <a onClick={this.showRegisterForm}>Register</a>
                 </div>
-            {this.state.logForm ? <Login /> : <Register />}
+            {this.state.logForm ?
+            <Login />
+            :
+            <Register 
+                logScreenHandle={this.props.logScreenHandle}
+                userHandle={this.props.userHandle}
+                isLoggedHandle={this.props.isLoggedHandle}
+            />}
             </div>
         )
       }

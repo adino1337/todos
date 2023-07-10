@@ -9,7 +9,7 @@ class Wrapper extends React.Component {
         return (
           <div>
             <nav>
-              {this.props.isLogged && <h5>{this.props.name}</h5>}
+              {this.props.isLogged && <h5>{this.props.user.email}</h5>}
               {!this.props.isLogged && <button onClick={this.props.logScreen}>Login</button>}
             </nav>
             {this.props.children}            

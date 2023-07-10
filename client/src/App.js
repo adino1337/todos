@@ -5,10 +5,10 @@ import LogScreen from './screens/LogScreen'
 class MainApp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {      
+    this.state = { 
       user: undefined,
       isLogged: false,
-      logScreen: true,
+      logScreen: false,
     };
 
   }
@@ -16,17 +16,32 @@ class MainApp extends React.Component {
   logScreenHandle = () => {
     this.setState({logScreen: !this.state.logScreen});  
   }
+  userHandle = (loggedUser) => {
+    console.log(loggedUser.userObject);
+    this.setState({user: loggedUser.userObject});
+  }
+  isLoggedHandle = () => {
+    this.setState({isLogged: !this.state.isLogged});
+  }
 
   render() {
     return (      
       <Wrapper
           isLogged={this.state.isLogged}
-          name={this.state.name}    
+          user={this.state.user}    
           logScreen={this.logScreenHandle}
   
       >
         
-      {this.state.logScreen ? <LogScreen /> : <TodoApp/>}
+      {this.state.logScreen ? 
+      <LogScreen 
+      logScreenHandle={this.logScreenHandle}
+      userHandle={this.userHandle}
+      isLoggedHandle={this.isLoggedHandle}
+      />
+       : 
+      <TodoApp/>}
+
       </Wrapper>
     
     );
