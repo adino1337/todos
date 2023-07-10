@@ -10,24 +10,7 @@ class Form extends React.Component {
         this.submit = props.submit
         this.handleChange = this.handleChange.bind(this);
       }
-    render() {
-      return (
-      <form className='toDoForm' onSubmit={this.handleSubmit}>
-        <div className='input'>
-          <input
-            id="new-todo"
-            onChange={this.handleChange}
-            value={this.state.text}    
-            required              
-          />
-          <span className='placeholder'>New todo</span>
-          </div>
-          <button>
-            Add #{this.props.items.length + 1}
-          </button>
-        </form>
-      );
-    }
+    
     // 1. Prepis handleChange ako arrow function. done
   handleChange = (e) => {
     this.setState({ text: e.target.value });
@@ -53,6 +36,24 @@ class Form extends React.Component {
       };
     });
     
+  }
+  render() {
+    return (
+    <form className='toDoForm' onSubmit={this.handleSubmit}>
+      <div className='input'>
+        <input
+          id="new-todo"
+          onChange={this.handleChange}
+          value={this.state.text}    
+          required              
+        />
+        <span className='placeholder'>New todo</span>
+        </div>
+        <button>
+          Add #{this.props.items.length + 1}
+        </button>
+      </form>
+    );
   }
   }
 
