@@ -62,11 +62,21 @@ class Register extends React.Component {
     }
   
   render() {
-    return (
+    return (      
     <form className='loginForm' onSubmit={this.handleRegister}>
-        <input type='email' name='email' onChange={this.handleChange} value={this.state.email} required/>
+    
+      <div className='input'>
+        <input type='text' name='email' onChange={this.handleChange} value={this.state.email} required/>
+        <span className='placeholder'>Email</span>
+      </div>
+      <div className='input'>
         <input type='password' name='password' onChange={this.handleChange} value={this.state.password} required />
+        <span className='placeholder'>Password</span>
+      </div>
+      <div className='input'>
         <input type='password' name='passwordConfirm' onChange={this.handleChange} value={this.state.passwordConfirm} required />
+        <span className='placeholder'>Confirm password</span>
+      </div>
         <button>Register</button>
         <div id='info'></div>
       </form>
