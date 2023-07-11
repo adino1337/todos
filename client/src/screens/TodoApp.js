@@ -6,7 +6,8 @@ export default function TodoApp(props){
   
   const [items, setItems] = useState([])
 
-  useEffect(async () => {      	
+  useEffect(() => {
+    const asyncFn = async () => { 
       try{
         const requestOptions = {
           method: 'GET',
@@ -19,46 +20,47 @@ export default function TodoApp(props){
       catch(err){
         alert("Error "+err.message);
       }
-    }
-  )
+     };
+    asyncFn();
+  }, []);
+  
 
-  const handleAddItem = async (newItemm) => {
+  const handleAddItem = async (newItem) => {
     try{
       const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json','Authorization': this.props.user.token},
-        body: JSON.stringify(newItemm)
+        headers: { 'Content-Type': 'application/json','Authorization': props.user.token},
+        body: JSON.stringify(newItem)
       };
       const response = await fetch('http://localhost:5000/todos', requestOptions);
       const todo = await response.json();
-      this.setState(state => ({...state, items: [...state.items, todo.data ]}));
+      setItems([...items,todo.data])
     }
     catch(err){
       alert("Error: " + err.message);
     }
   }
-
   const handleUpdate = async (itemToUpdate) => {
-    try{
+    try {
       const requestOptions = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json','Authorization': this.props.user.token},
-        body: JSON.stringify({deleted: !itemToUpdate.deleted})
+        headers: { 'Content-Type': 'application/json', 'Authorization': props.user.token },
+        body: JSON.stringify({ deleted: !itemToUpdate.deleted })
       };
-      const response = await fetch('http://localhost:5000/todos/'+itemToUpdate._id, requestOptions);
+      const response = await fetch('http://localhost:5000/todos/' + itemToUpdate._id, requestOptions);
       const todo = await response.json();
-      this.setState(state => {
-        // 3. Zapracuj zmazanie polozky item z pola items. done
-        itemToUpdate.deleted = !itemToUpdate.deleted;
-        return {
-          items: state.items
-        }
-      });    
-    }
-    catch(err){
+      setItems((prevItems) => {
+        return prevItems.map((item) => {
+          if (item._id === itemToUpdate._id) {
+            return { ...item, deleted: !item.deleted };
+          } else {
+            return item;
+          }
+        });
+      });
+    } catch (err) {
       alert("Error: " + err.message);
     }
-    
   }
     return (
       <div>        
