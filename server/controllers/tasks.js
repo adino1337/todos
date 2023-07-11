@@ -1,11 +1,15 @@
 const Todo = require('../models/Todo')
 
 const getAllTodos = async (req, res) => {
-    const tasks = await Todo.find({})
+    const user_id = req.user.user_id
+    const tasks = await Todo.find({user_id: user_id})
     res.status(200).json({code:200,data: tasks })
   }
   
 const addTodo = async (req, res) => {
+  req.body.user_id = req.user.user_id
+  console.log(req.body);
+
   const todo = await Todo.create(req.body)
   res.status(201).json({code:201,data: todo })
 }

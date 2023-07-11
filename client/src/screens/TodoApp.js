@@ -13,7 +13,11 @@ class TodoApp extends React.Component {
   componentDidMount = () => {  
     (async () => {	
       try{
-        const response = await fetch("http://localhost:5000/todos");
+        const requestOptions = {
+          method: 'GET',
+          headers: {'Authorization': this.props.user.token},
+        };
+        const response = await fetch("http://localhost:5000/todos",requestOptions);
         const todos = await response.json();
         this.setState({items: todos.data});  
       }
@@ -26,7 +30,7 @@ class TodoApp extends React.Component {
     try{
       const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json','Authorization': this.props.user.token},
         body: JSON.stringify(newItemm)
       };
       const response = await fetch('http://localhost:5000/todos', requestOptions);
@@ -42,7 +46,7 @@ class TodoApp extends React.Component {
     try{
       const requestOptions = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json','Authorization': this.props.user.token},
         body: JSON.stringify({deleted: !itemToUpdate.deleted})
       };
       const response = await fetch('http://localhost:5000/todos/'+itemToUpdate._id, requestOptions);

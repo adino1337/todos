@@ -41,7 +41,9 @@ class MainApp extends React.Component {
       isLoggedHandle={this.isLoggedHandle}
       />
        : 
-      <TodoApp/>}
+      <TodoApp
+        user={this.state.user}
+      />}
 
       </Wrapper>
     

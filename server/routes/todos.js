@@ -3,9 +3,12 @@ const router = express.Router();
 const {getAllTodos,addTodo,updateTodo} = require('../controllers/tasks');
 const register = require('../controllers/register');
 const login = require('../controllers/login');
+const auth = require('../middleware/auth');
 
-router.route('/').get(getAllTodos).post(addTodo);
-router.route('/:id').put(updateTodo);
+router.get('/',auth,getAllTodos);
+
+router.post('/',auth,addTodo);
+router.put('/:id',auth,updateTodo);
 
 router.route('/user/register').post(register)
 router.route('/user/login').post(login)
