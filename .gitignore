@@ -1,4 +1,5 @@
 /client/node_modules
+/client-class_based/node_modules
 /server/node_modules
 /node-express-course-main
 .env

@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.logout{
+  display: flex;
+  flex-direction: column;
+}
+.logout p {
+  margin: 0;
+  font-weight: bold !important;
+  text-align: end;
+}
+.logout a{
+  text-align: end;
+  cursor: pointer;
+  color: white;
+}
+.strong{
+  font-weight: bold !important;
+}
+.delete{
+  color: cornflowerblue;
+  text-decoration: line-through;
+}
+nav{
+  max-width: 100%;
+  padding: 10px 25%;
+  background-color: cornflowerblue;
+  text-align: center;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.right{
+  justify-content: end;
+}
+nav h2{
+  height: 100%;
+  margin: 0;
+}
+h1{
+  text-align: center;
+  font-size: 4em;
+}
+.wrapper{
+  margin: 0 auto;
+  max-width: 90%;
+  width: fit-content;
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.4);
+  /*border: 2px solid cornflowerblue;*/
+  border-radius: 2rem;
+  padding: 30px;
+}
+.radioButtons{
+  display: flex;
+  justify-content: center;
+  gap: 10px
+}
+
+.toDoForm{
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+}
+.toDoForm input{
+  width: 100%;
+  border: none;
+}
+.toDoForm .input{
+  padding: 10px 20px;
+  width: 60%;
+  border: 2px solid cornflowerblue;
+  border-radius: 10px 0 0 10px;
+  position: relative;
+}
+.toDoForm .input span{
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translate(0,-50%);
+  font-size: 0.9rem;
+  pointer-events: none;
+  transition: transform 400ms;
+  background-color: white;
+  padding: 0 5px;
+  font-weight: bold;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  color: cornflowerblue;
+
+}
+.toDoForm .input input:focus ~ span,
+.toDoForm .input input:valid ~ span{
+  transform: translate(0,-30px);
+  border-left: 2px solid cornflowerblue;
+  border-right: 2px solid cornflowerblue;
+  color: cornflowerblue;
+}
+.toDoForm input:focus{
+outline: none;
+}
+.toDoForm button{
+  padding: 10px 10px;
+  width: 40%;
+  background-color: cornflowerblue;
+  border: 2px solid cornflowerblue;
+  color: aliceblue;
+  border-radius: 0 10px 10px 0;
+  font-weight: bold;
+  cursor: pointer;
+}
+.listWrapper{
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
+}
+
+.listWrapper .noContent{
+  max-width: 10rem;
+  height: auto;
+  align-self: center;
+}
+
+.list{
+  list-style-type: none;
+  width: 100%;
+  padding: 20px 0;
+}
+.item .text{
+  display: flex;
+  align-items: center;
+}
+
+.item{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 2px solid #aaa;
+}
+.item img{
+  width: 25px;
+  height: auto;
+}
+
+.loginWrapper{
+  margin: 0 auto;
+  max-width: 90%;
+  width: fit-content;
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.4);
+  /*border: 2px solid cornflowerblue;*/
+  border-radius: 2rem;  
+  padding: 30px;
+  margin-top: 50px;
+
+}
+
+.loginWrapper .links{
+  display: flex;
+  justify-content: space-evenly;
+  color: cornflowerblue;
+}
+
+.loginWrapper .links a{
+  cursor: pointer;
+  position: relative;
+}
+.loginWrapper .links .strong::after{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background-color: cornflowerblue;
+  bottom: -5px;
+  left: 0;
+}
+
+.loginForm{
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}/*
+.loginForm input{
+  margin-bottom: 30px;
+}*/
+
+
+.loginForm input{
+  width: 100%;
+  border: none;
+}
+.loginForm .input{
+  padding: 10px 20px;
+  width: calc(100% - 45px);
+  border: 2px solid cornflowerblue;
+  border-radius: 15px;
+  position: relative;
+  margin-bottom: 30px;
+}
+.loginForm .input span{
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translate(0,-50%);
+  font-size: 0.9rem;
+  pointer-events: none;
+  transition: transform 400ms;
+  background-color: white;
+  padding: 0 5px;
+  font-weight: bold;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  color: cornflowerblue;
+
+}
+.loginForm .input input:focus ~ span,
+.loginForm .input input:valid ~ span{
+  transform: translate(0,-30px);
+  border-left: 2px solid cornflowerblue;
+  border-right: 2px solid cornflowerblue;
+  color: cornflowerblue;
+}
+.loginForm input:focus{
+outline: none;
+}
+.loginForm button{
+  padding: 10px 10px;
+  width: 100%;
+  background-color: cornflowerblue;
+  color: white;
+  border: 2px solid cornflowerblue;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition-duration: 250ms;
+}
+.loginForm button:hover{
+  background-color: rgb(74, 134, 245);
+}
+
+.loginForm #info{
+  text-align: center;
+  color: cornflowerblue;
+  font-size: 14px;
+  margin-top: 10px;
+}
