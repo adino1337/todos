@@ -8,7 +8,7 @@ class MainApp extends React.Component {
     this.state = { 
       user: undefined,
       isLogged: false,
-      logScreen: false,
+      logScreen: true,
     };
 
   }
@@ -17,20 +17,21 @@ class MainApp extends React.Component {
     this.setState({logScreen: !this.state.logScreen});  
   }
   userHandle = (loggedUser) => {
-    console.log(loggedUser.userObject);
     this.setState({user: loggedUser.userObject});
   }
   isLoggedHandle = () => {
     this.setState({isLogged: !this.state.isLogged});
   }
-
+  logoutHandle = () => {
+    this.setState({user: undefined, isLogged: false, logScreen:true},);
+  }
   render() {
     return (      
       <Wrapper
           isLogged={this.state.isLogged}
           user={this.state.user}    
           logScreen={this.logScreenHandle}
-  
+          logout={this.logoutHandle}
       >
         
       {this.state.logScreen ? 

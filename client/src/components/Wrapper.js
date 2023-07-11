@@ -8,9 +8,11 @@ class Wrapper extends React.Component {
     render() {
         return (
           <div>
-            <nav>
-              {this.props.isLogged && <h5>{this.props.user.email}</h5>}
-              {!this.props.isLogged && <button onClick={this.props.logScreen}>Login</button>}
+            <nav className={this.props.isLogged && "right"}>
+              {this.props.isLogged && <div className='logout'>
+              <p>{this.props.user.email}</p><a onClick={this.props.logout}>logout</a></div>
+              }
+              {!this.props.isLogged && <h2>ToDo's</h2>}
             </nav>
             {this.props.children}            
           </div>

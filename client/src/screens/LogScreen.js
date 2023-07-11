@@ -6,7 +6,7 @@ class LogScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            logForm: false,      
+            logForm: true,      
           };
     }
     showLoginForm = () => {
@@ -19,11 +19,14 @@ class LogScreen extends React.Component {
         return (
             <div className='loginWrapper'>
                 <div className='links'>
-                    <a onClick={this.showLoginForm}>Login</a>
-                    <a onClick={this.showRegisterForm}>Register</a>
+                    <a onClick={this.showLoginForm} className={this.state.logForm && "strong"}>Login</a>
+                    <a onClick={this.showRegisterForm} className={!this.state.logForm && "strong"}>Register</a>
                 </div>
             {this.state.logForm ?
-            <Login />
+            <Login 
+                logScreenHandle={this.props.logScreenHandle}
+                userHandle={this.props.userHandle}
+                isLoggedHandle={this.props.isLoggedHandle}/>
             :
             <Register 
                 logScreenHandle={this.props.logScreenHandle}

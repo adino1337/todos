@@ -7,7 +7,7 @@ const login = require('../controllers/login');
 router.route('/').get(getAllTodos).post(addTodo);
 router.route('/:id').put(updateTodo);
 
-router.route('/register').post(register)
-router.route('/login').post(login)
+router.route('/user/register').post(register)
+router.route('/user/login').post(login)
 
 module.exports = router

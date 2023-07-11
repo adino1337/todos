@@ -38,17 +38,16 @@ class Register extends React.Component {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({...this.state})
         };
-        const response = await fetch('http://localhost:5000/todos/register', requestOptions);
+        const response = await fetch('http://localhost:5000/todos/user/register', requestOptions);
         const user = await response.json();
         if(user.code !== 201)
           document.getElementById('info').innerHTML = user.message;
         else{
           document.getElementById('info').innerHTML = "User created successfully";
-          console.log(user.userObject);
+          this.props.userHandle(user)
           setTimeout(() => {
             this.props.logScreenHandle()
             this.props.isLoggedHandle()
-            this.props.userHandle(user)
           }, 1000)
         }
         this.setState({
