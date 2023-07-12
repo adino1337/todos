@@ -2,5 +2,6 @@
 /client-class_based/node_modules
 /server/node_modules
 /node-express-course-main
+/client_copy
 .env
 .rest
