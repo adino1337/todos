@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TodoApp from './screens/TodoApp'
 import Wrapper from './components/Wrapper'
 import LogScreen from './screens/LogScreen'
@@ -11,10 +11,22 @@ export default function App() {
   const [isLogged, setIsLogged] = useState(false);
 
   const logoutHandle = () => {
+    localStorage.clear();
     setIsLogged(false)
     setUser(undefined)
     setLogScreen(true)
   }
+
+  
+  useEffect(() => {
+      const userL = JSON.parse(localStorage.getItem("user"))
+      if(userL){
+        setUser(userL)
+        setIsLogged(true)
+        setLogScreen(false)
+      }
+    
+  }, []);
 
   return (
     <Wrapper        

@@ -25,6 +25,7 @@ export default function Login(props){
           setInfoMessage(res.message);
         else{
           setInfoMessage("Logged successfully");
+          localStorage.setItem("user",JSON.stringify(res.userObject));
           props.setUser(res.userObject);
           setTimeout(() => {
             props.setLogScreen(false)
