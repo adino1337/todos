@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import * as userActions from '../api/userActions'
 
 export default function Login(props){
     const [form, setForm] = useState({
@@ -6,6 +7,7 @@ export default function Login(props){
         password: ""
     })
     
+    const [infoMessage, setInfoMessage] = useState("")
     
     const handleChange = (evt) => {
         const value = evt.target.value;
@@ -18,18 +20,12 @@ export default function Login(props){
     const handleLogin = async (e) => {
       e.preventDefault();      
       try{
-        const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({...form})
-        };
-        const response = await fetch('http://localhost:5000/todos/user/login', requestOptions);
-        const user = await response.json();
-        if(user.code !== 200)
-          document.getElementById('info').innerHTML = user.message;
+        const res = await userActions.login(form)
+        if(res.code !== 200)
+          setInfoMessage(res.message);
         else{
-          document.getElementById('info').innerHTML = "Logged successfully";
-          props.setUser(user.userObject);
+          setInfoMessage("Logged successfully");
+          props.setUser(res.userObject);
           setTimeout(() => {
             props.setLogScreen(false)
             props.setIsLogged(true)
@@ -41,7 +37,7 @@ export default function Login(props){
         })
       }
       catch(err){
-        document.getElementById('info').innerHTML = err.message
+        setInfoMessage(err.message)
       }
     }
     
@@ -58,7 +54,7 @@ export default function Login(props){
         <span className='placeholder'>Password</span>
       </div>
       <button>Login</button>
-      <div id='info'></div>
+      <div id='info'>{infoMessage}</div>
     </form>
     );
   }

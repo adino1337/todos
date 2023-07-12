@@ -1,5 +1,5 @@
 import { useState} from 'react';
-
+import * as userActions from '../api/userActions'
 export default function Register(props){    
     
     const [form, setForm] = useState({
@@ -7,6 +7,8 @@ export default function Register(props){
         password: '',
         passwordConfirm: ''
     })
+
+    const [infoMessage,setInfoMessage] = useState("")
 
     const handleChange = (evt) => {
         const value = evt.target.value;
@@ -19,7 +21,7 @@ export default function Register(props){
     const handleRegister = async (e) => {
       e.preventDefault();
       if(form.passwordConfirm !== form.password){
-        document.getElementById('info').innerHTML = 'Passwords do not match'
+        setInfoMessage('Passwords do not match')
         setForm({
             ...form,
             password: "",
@@ -29,18 +31,12 @@ export default function Register(props){
       }
       else{
       try{
-        const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({...form})
-        };
-        const response = await fetch('http://localhost:5000/todos/user/register', requestOptions);
-        const user = await response.json();
-        if(user.code !== 201)
-          document.getElementById('info').innerHTML = user.message;
+        const res = await userActions.register(form)
+        if(res.code !== 201)
+          setInfoMessage(res.message)
         else{
-          document.getElementById('info').innerHTML = "User created successfully";
-          props.setUser(user.userObject)
+          setInfoMessage("User created successfully");
+          props.setUser(res.userObject)
           setTimeout(() => {
             props.setLogScreen(false)
             props.setIsLogged(true)
@@ -53,7 +49,7 @@ export default function Register(props){
         })
       }
       catch(err){
-        document.getElementById('info').innerHTML = err.message
+        setInfoMessage(err.message)
       }}
     }
   
@@ -73,7 +69,7 @@ export default function Register(props){
         <span className='placeholder'>Confirm password</span>
       </div>
         <button>Register</button>
-        <div id='info'></div>
+        <div id='info'>{infoMessage}</div>
       </form>
       
     );

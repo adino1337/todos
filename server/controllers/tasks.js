@@ -8,7 +8,6 @@ const getAllTodos = async (req, res) => {
   
 const addTodo = async (req, res) => {
   req.body.user_id = req.user.user_id
-  console.log(req.body);
 
   const todo = await Todo.create(req.body)
   res.status(201).json({code:201,data: todo })
