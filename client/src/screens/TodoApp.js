@@ -40,15 +40,31 @@ export default function TodoApp(props){
       alert("Error: " + err.message);
     }
   }
-  const handleUpdate = async (itemToUpdate) => {
+
+  const handleUpdate = async (itemToUpdate,e) => {
+    if(e.target.id === "deleteBtn"){
+      try {
+        const requestOptions = {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json', 'Authorization': props.user.token },
+          
+        };
+        await fetch('http://localhost:5000/todos/' + itemToUpdate._id, requestOptions);
+        setItems((prevItems) => {
+          return prevItems.filter(item => item._id !== itemToUpdate._id)
+        });
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+    else{
     try {
       const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': props.user.token },
         body: JSON.stringify({ deleted: !itemToUpdate.deleted })
       };
-      const response = await fetch('http://localhost:5000/todos/' + itemToUpdate._id, requestOptions);
-      const todo = await response.json();
+      await fetch('http://localhost:5000/todos/' + itemToUpdate._id, requestOptions);
       setItems((prevItems) => {
         return prevItems.map((item) => {
           if (item._id === itemToUpdate._id) {
@@ -61,7 +77,7 @@ export default function TodoApp(props){
     } catch (err) {
       alert("Error: " + err.message);
     }
-  }
+  }}
     return (
       <div>        
         <h1>ToDo's</h1>

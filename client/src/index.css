@@ -147,12 +147,22 @@ outline: none;
   justify-content: space-between;
   padding: 10px 0;
   border-bottom: 2px solid #aaa;
+  position: relative;
 }
-.item img{
+.item .icon{
   width: 25px;
   height: auto;
 }
-
+.item .actions{
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+}
+.item #deleteBtn{
+  width: 15px;
+  height: auto;
+  cursor: pointer;
+}
 .loginWrapper{
   margin: 0 auto;
   max-width: 90%;

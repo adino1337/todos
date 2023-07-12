@@ -2,6 +2,7 @@ import { useState } from 'react';
 import noToDos from './../images/noToDos.png'
 import checked from './../images/checked.svg'
 import notChecked from './../images/notChecked.svg'
+import trash from './../images/trash-solid.svg'
 
 export default function TodoList(props){
   const [mode,setMode] = useState("all")
@@ -9,8 +10,7 @@ export default function TodoList(props){
   const handleMode = e => {
     setMode(e.target.value)     
   }  
-       
-      return (
+     return (
         <>
         <div className='radioButtons'>
           <label>
@@ -36,7 +36,7 @@ export default function TodoList(props){
                 if(mode == "done")
                   return item.deleted           
               }).map(item => (
-                <div className='item' key={item.id} onClick={(e) => props.onClick(item)}><div className='text'>{item.text}</div><img className='icon' src={item.deleted ? checked : notChecked} alt="done" /></div>
+                <div className='item' key={item.id} onClick={(e) => props.onClick(item,e)}><div className='text'>{item.text}</div><span className='actions'><img className='icon' src={item.deleted ? checked : notChecked} alt="done" /><img id='deleteBtn' src={trash} alt="delete" /></span></div>
               ))}
             </div>}
         </div>

@@ -28,8 +28,22 @@ const updateTodo = async (req, res) => {
   res.status(200).json({ code: 200, todo: todo})
 }
 
+const deleteTodo = async (req, res) => {
+  const { id: taskID } = req.params
+
+  const todo = await Todo.findByIdAndDelete({ _id: taskID })
+
+  if (!todo) {
+    res.status(404).json({code: 404, message: "Task not found"})
+  }
+
+  res.status(200).json({ code: 200, todo: todo})
+
+}
+
 module.exports = {
   getAllTodos,
   addTodo,
-  updateTodo
+  updateTodo,
+  deleteTodo
 }
