@@ -35,8 +35,14 @@ export default function TodoList(props){
                   return !item.deleted
                 if(mode == "done")
                   return item.deleted           
-              }).map(item => (
-                <div className='item' key={item.id} onClick={(e) => props.onClick(item,e)}><div className='text'>{item.text}</div><span className='actions'><img className='icon' src={item.deleted ? checked : notChecked} alt="done" /><img id='deleteBtn' src={trash} alt="delete" /></span></div>
+              }).map((item) => (
+                <div className='item' key={item._id} onClick={(e) => props.onClick(item,e)}>
+                <div className='text'>{item.text}</div>
+                <span className='actions'>
+                  <img className='icon' src={item.deleted ? checked : notChecked} alt="done" />
+                  <img id='deleteBtn' src={trash} alt="delete" />
+                  </span>
+                  </div>
               ))}
             </div>}
         </div>

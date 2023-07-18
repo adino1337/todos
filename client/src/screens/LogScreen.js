@@ -9,18 +9,16 @@ export default function LogScreen(props) {
         return (
             <div className='loginWrapper'>
                 <div className='links'>
-                    <a onClick={()=>setLogForm(true)} className={logForm && "strong"}>Login</a>
-                    <a onClick={()=>setLogForm(false)} className={!logForm && "strong"}>Register</a>
+                    <a onClick={()=>setLogForm(true)} className={logForm ? "strong" : ""}>Login</a>
+                    <a onClick={()=>setLogForm(false)} className={!logForm ? "strong" : ""}>Register</a>
                 </div>
             {logForm ?
             <Login 
                 setLogScreen={props.setLogScreen}
-                setUser={props.setUser}
                 setIsLogged={props.setIsLogged}/>
             :
             <Register                 
                 setLogScreen={props.setLogScreen}
-                setUser={props.setUser}
                 setIsLogged={props.setIsLogged}
             />}
             </div>

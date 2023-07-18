@@ -1,9 +1,10 @@
 import TodoList from '../components/TodoList'
 import Form from '../components/Form'
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function TodoApp(props){
-  
+export default function TodoApp(){
+  const user = useSelector(state=>state.user)
   const [items, setItems] = useState([])
 
   useEffect(() => {
@@ -11,7 +12,7 @@ export default function TodoApp(props){
       try{
         const requestOptions = {
           method: 'GET',
-          headers: {'Authorization': props.user.token},
+          headers: {'Authorization': user.user.token},
         };
         const response = await fetch("http://localhost:5000/todos",requestOptions);
         const todos = await response.json();
@@ -29,7 +30,7 @@ export default function TodoApp(props){
     try{
       const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json','Authorization': props.user.token},
+        headers: { 'Content-Type': 'application/json','Authorization': user.user.token},
         body: JSON.stringify(newItem)
       };
       const response = await fetch('http://localhost:5000/todos', requestOptions);
@@ -46,7 +47,7 @@ export default function TodoApp(props){
       try {
         const requestOptions = {
           method: 'DELETE',
-          headers: { 'Content-Type': 'application/json', 'Authorization': props.user.token },
+          headers: { 'Content-Type': 'application/json', 'Authorization': user.user.token },
           
         };
         await fetch('http://localhost:5000/todos/' + itemToUpdate._id, requestOptions);
@@ -61,7 +62,7 @@ export default function TodoApp(props){
     try {
       const requestOptions = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': props.user.token },
+        headers: { 'Content-Type': 'application/json', 'Authorization': user.user.token },
         body: JSON.stringify({ deleted: !itemToUpdate.deleted })
       };
       await fetch('http://localhost:5000/todos/' + itemToUpdate._id, requestOptions);

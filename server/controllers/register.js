@@ -8,13 +8,13 @@ const register = async (req, res) => {
     email = email.toLowerCase();
 
     if (!(email && password)) {
-      res.status(400).json({code: 400, message: "All input is required"});
+      res.status(400).json({code: 400, userObject: {}, message: "All input is required"});
     }
 
     const oldUser = await User.findOne({ email });
 
     if (oldUser) {
-      return res.status(409).json({code: 409, message:"User Already Exist. Please Login"});
+      return res.status(409).json({code: 409, userObject: {},message:"User Already Exist. Please Login"});
     }
 
     const encryptedPassword = await bcrypt.hash(password, 10);
@@ -35,9 +35,9 @@ const register = async (req, res) => {
     const userObject = user.toObject(); // Skonvertovať na plain JavaScript objekt
     userObject.token = token; // Pridať vlastnosť token
 
-    res.status(201).json({code: 201, userObject});
+    res.status(201).json({code: 201, userObject, message: ""});
   } catch (err) {
-    res.status(500).json({code: 500, message: err.message});
+    res.status(500).json({code: 500, userObject: {}, message: err.message});
   }
 }
 

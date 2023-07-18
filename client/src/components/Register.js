@@ -1,7 +1,9 @@
-import { useState} from 'react';
-import * as userActions from '../api/userActions'
-export default function Register(props){    
-    
+import { useState } from 'react';
+import {useDispatch} from 'react-redux';
+import {register} from '../features/userSlice';
+
+export default function Register(){    
+    const dispatch = useDispatch()
     const [form, setForm] = useState({
         email: '',
         password: '',
@@ -26,23 +28,12 @@ export default function Register(props){
             ...form,
             password: "",
             passwordConfirm: ""
-        })
-      
+        })      
       }
       else{
       try{
-        const res = await userActions.register(form)
-        if(res.code !== 201)
-          setInfoMessage(res.message)
-        else{
-          setInfoMessage("User created successfully");
-          localStorage.setItem("user",JSON.stringify(res.userObject));
-          props.setUser(res.userObject)
-          setTimeout(() => {
-            props.setLogScreen(false)
-            props.setIsLogged(true)
-          }, 1000)
-        }
+        dispatch(register(form))
+
         setForm({
           email: '',
           password: '',
@@ -50,7 +41,7 @@ export default function Register(props){
         })
       }
       catch(err){
-        setInfoMessage(err.message)
+        console.error(err)
       }}
     }
   

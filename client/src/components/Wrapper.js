@@ -1,12 +1,21 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../features/userSlice';
+
 export default function Wrapper(props){  
- 
+
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
+  const logoutHandle = () => {
+    dispatch(logout())
+    localStorage.clear();
+  }
   return (
     <div>
-      <nav className={props.isLogged && "right"}>
-        {props.isLogged && <div className='logout'>
-        <p>{props.user.email}</p><a onClick={props.logoutHandle}>logout</a></div>
+      <nav className={!user.loggedOut ? "right" : ""}>
+        {!user.loggedOut && <div className='logout'>
+        <p>{user.user.email}</p><a onClick={logoutHandle}>logout</a></div>
         }
-        {!props.isLogged && <h2>ToDo's</h2>}
+        {user.loggedOut && <h2>ToDo's</h2>}
       </nav>
       {props.children}            
     </div>

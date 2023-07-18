@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import * as userActions from '../api/userActions'
+import { useDispatch } from 'react-redux';
+import {login} from '../features/userSlice';
 
-export default function Login(props){
+export default function Login(){
+  const dispatch = useDispatch()
+
     const [form, setForm] = useState({
         email: "",
         password: ""
@@ -20,18 +23,8 @@ export default function Login(props){
     const handleLogin = async (e) => {
       e.preventDefault();      
       try{
-        const res = await userActions.login(form)
-        if(res.code !== 200)
-          setInfoMessage(res.message);
-        else{
-          setInfoMessage("Logged successfully");
-          localStorage.setItem("user",JSON.stringify(res.userObject));
-          props.setUser(res.userObject);
-          setTimeout(() => {
-            props.setLogScreen(false)
-            props.setIsLogged(true)
-          }, 1000)
-        }
+
+        dispatch(login(form))
         setForm({
           email: '',
           password: '',
