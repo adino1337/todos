@@ -1,96 +1,25 @@
 import TodoList from '../components/TodoList'
 import Form from '../components/Form'
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import {getTodos} from '../features/todosSlice'
 export default function TodoApp(){
   const user = useSelector(state=>state.user)
-  const [items, setItems] = useState([])
+  const dispatch = useDispatch()
 
+  
+  
   useEffect(() => {
-    const asyncFn = async () => { 
-      try{
-        const requestOptions = {
-          method: 'GET',
-          headers: {'Authorization': user.user.token},
-        };
-        const response = await fetch("http://localhost:5000/todos",requestOptions);
-        const todos = await response.json();
-        setItems(todos.data);  
-      }
-      catch(err){
-        alert("Error "+err.message);
-      }
-     };
-    asyncFn();
+    dispatch(getTodos(user.user.token))
   }, []);
   
 
-  const handleAddItem = async (newItem) => {
-    try{
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json','Authorization': user.user.token},
-        body: JSON.stringify(newItem)
-      };
-      const response = await fetch('http://localhost:5000/todos', requestOptions);
-      const todo = await response.json();
-      setItems([...items,todo.data])
-    }
-    catch(err){
-      alert("Error: " + err.message);
-    }
-  }
-
-  const handleUpdate = async (itemToUpdate,e) => {
-    if(e.target.id === "deleteBtn"){
-      try {
-        const requestOptions = {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json', 'Authorization': user.user.token },
-          
-        };
-        await fetch('http://localhost:5000/todos/' + itemToUpdate._id, requestOptions);
-        setItems((prevItems) => {
-          return prevItems.filter(item => item._id !== itemToUpdate._id)
-        });
-      } catch (err) {
-        alert("Error: " + err.message);
-      }
-    }
-    else{
-    try {
-      const requestOptions = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': user.user.token },
-        body: JSON.stringify({ deleted: !itemToUpdate.deleted })
-      };
-      await fetch('http://localhost:5000/todos/' + itemToUpdate._id, requestOptions);
-      setItems((prevItems) => {
-        return prevItems.map((item) => {
-          if (item._id === itemToUpdate._id) {
-            return { ...item, deleted: !item.deleted };
-          } else {
-            return item;
-          }
-        });
-      });
-    } catch (err) {
-      alert("Error: " + err.message);
-    }
-  }}
-    return (
+  return (
       <div>        
         <h1>ToDo's</h1>
         <div className='wrapper'>
-        <TodoList
-          items={items}
-          onClick={handleUpdate}
-        />
-        <Form
-          items={items}
-          submit = {handleAddItem}
-        />
+        <TodoList />
+        <Form/>
         </div>
       </div>
     );

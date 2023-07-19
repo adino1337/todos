@@ -1,8 +1,18 @@
 import {useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import {addTodo} from '../features/todosSlice'
 
-export default function Form(props) {
-    
-    const [text,setText] = useState("")
+export default function Forms() {
+  const dispatch = useDispatch()
+  
+
+  const todos = useSelector(state => state.todos)
+  const user = useSelector(state => state.user)
+
+  const items = todos.todos
+  const token = user.user.token
+  
+  const [text,setText] = useState("")
     
     // 1. Prepis handleChange ako arrow function. done
   const handleChange = (e) => {
@@ -20,7 +30,7 @@ export default function Form(props) {
       text: text,
       deleted: false
     };
-    props.submit(newItem)
+    dispatch(addTodo({newItem, token}));
     setText("")
     
   }
@@ -35,8 +45,11 @@ export default function Form(props) {
         />
         <span className='placeholder'>New todo</span>
         </div>
-        <button>
-          Add #{props.items.length + 1}
+        <button className='todoFormBtn'>{
+          todos.loaders.postLoader
+          ? <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+          : <div class="lds-ring">Add #{items.length + 1}</div>
+          }
         </button>
       </form>
     );

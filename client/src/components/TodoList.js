@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import noToDos from './../images/noToDos.png'
-import checked from './../images/checked.svg'
-import notChecked from './../images/notChecked.svg'
-import trash from './../images/trash-solid.svg'
+import { useSelector } from 'react-redux';
+import Todos from './Todos'
 
-export default function TodoList(props){
+export default function TodoList(){
   const [mode,setMode] = useState("all")
 
+  const todos = useSelector(state => state.todos)
   const handleMode = e => {
     setMode(e.target.value)     
   }  
@@ -24,27 +23,11 @@ export default function TodoList(props){
           Completed</label>
           </div>
           <div className='listWrapper' >
-            {props.items.length === 0 && <img className='noContent' src={noToDos} alt="noToDos" />}
-            {props.items.length > 0 && 
-            <div className='list'>          
-              {props.items.sort((a, b) => Number(a.deleted) - Number(b.deleted))
-              .filter((item) => {
-                if(mode==="all")
-                  return true 
-                if(mode == "active")
-                  return !item.deleted
-                if(mode == "done")
-                  return item.deleted           
-              }).map((item) => (
-                <div className='item' key={item._id} onClick={(e) => props.onClick(item,e)}>
-                <div className='text'>{item.text}</div>
-                <span className='actions'>
-                  <img className='icon' src={item.deleted ? checked : notChecked} alt="done" />
-                  <img id='deleteBtn' src={trash} alt="delete" />
-                  </span>
-                  </div>
-              ))}
-            </div>}
+          {todos.loaders.getLoader 
+            ? <div class="todosLoader lds-ring"><div></div><div></div><div></div><div></div></div>
+            : <Todos mode={mode} />
+          }
+            
         </div>
 
         </>

@@ -12,15 +12,7 @@ export default function LogScreen(props) {
                     <a onClick={()=>setLogForm(true)} className={logForm ? "strong" : ""}>Login</a>
                     <a onClick={()=>setLogForm(false)} className={!logForm ? "strong" : ""}>Register</a>
                 </div>
-            {logForm ?
-            <Login 
-                setLogScreen={props.setLogScreen}
-                setIsLogged={props.setIsLogged}/>
-            :
-            <Register                 
-                setLogScreen={props.setLogScreen}
-                setIsLogged={props.setIsLogged}
-            />}
+            {logForm?<Login/>:<Register/>}
             </div>
         )
       }
