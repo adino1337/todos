@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import {useDispatch} from 'react-redux';
-import {register} from '../features/userSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {register, setError} from '../features/userSlice';
 
 export default function Register(){    
     const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
+
+
     const [form, setForm] = useState({
         email: '',
         password: '',
         passwordConfirm: ''
     })
 
-    const [infoMessage,setInfoMessage] = useState("")
 
     const handleChange = (evt) => {
         const value = evt.target.value;
@@ -23,7 +25,8 @@ export default function Register(){
     const handleRegister = async (e) => {
       e.preventDefault();
       if(form.passwordConfirm !== form.password){
-        setInfoMessage('Passwords do not match')
+        dispatch(setError('Passwords do not match'))
+
         setForm({
             ...form,
             password: "",
@@ -41,7 +44,7 @@ export default function Register(){
         })
       }
       catch(err){
-        console.error(err)
+        dispatch(setError(err.message))
       }}
     }
   
@@ -60,8 +63,8 @@ export default function Register(){
         <input type='password' name='passwordConfirm' onChange={handleChange} value={form.passwordConfirm} required />
         <span className='placeholder'>Confirm password</span>
       </div>
-        <button>Register</button>
-        <div id='info'>{infoMessage}</div>
+      <button>{user.loading ? <div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div> : "Register"}</button>
+        <div id='info'>{user.error}</div>
       </form>
       
     );

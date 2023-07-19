@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {login} from '../features/userSlice';
 
 export default function Login(){
   const dispatch = useDispatch()
-
+  const user = useSelector(state => state.user)
+  
     const [form, setForm] = useState({
         email: "",
         password: ""
     })
     
-    const [infoMessage, setInfoMessage] = useState("")
-    
+   
     const handleChange = (evt) => {
         const value = evt.target.value;
         setForm({
@@ -31,7 +31,7 @@ export default function Login(){
         })
       }
       catch(err){
-        setInfoMessage(err.message)
+        console.error(err.message)
       }
     }
     
@@ -47,8 +47,8 @@ export default function Login(){
         <input type='password' name='password' onChange={handleChange} value={form.password} required />
         <span className='placeholder'>Password</span>
       </div>
-      <button>Login</button>
-      <div id='info'>{infoMessage}</div>
+      <button>{user.loading ? <div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div> : "Login"}</button>
+      <div id='info'>{user.error}</div>
     </form>
     );
   }

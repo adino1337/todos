@@ -15,6 +15,10 @@ const TaskSchema = new mongoose.Schema({
     type: String,
     required: [true, 'must provide user id'],
   }
+},
+{
+  timestamps: true,
 })
+
 
 module.exports = mongoose.model('Todo', TaskSchema)

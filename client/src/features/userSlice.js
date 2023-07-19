@@ -56,6 +56,9 @@ const userSlice = createSlice({
       state.user=  null
       state.error=  null
       state.loggedOut=  true
+    },
+    setError: (state,action) => {
+      state.error = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -68,8 +71,9 @@ const userSlice = createSlice({
         state.loading = false;
         state.user = action.payload.userObject;
         state.error = action.payload.message;
+        if(action.payload.message.length === 0){
         state.loggedOut = false
-        localStorage.setItem("user",JSON.stringify(state));
+        localStorage.setItem("user",JSON.stringify(state));}
       })
       .addCase(login.rejected, (state) => {
         state.loading = false;
@@ -83,8 +87,9 @@ const userSlice = createSlice({
         state.loading = false;
         state.user = action.payload.userObject;
         state.error = action.payload.message;
+        if(action.payload.message.length === 0){
         state.loggedOut = false
-        localStorage.setItem("user",JSON.stringify(state));
+        localStorage.setItem("user",JSON.stringify(state));}
       })
       .addCase(register.rejected, (state) => {
         state.loading = false;
@@ -94,4 +99,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { setUser, logout } = userSlice.actions
+export const { setUser, logout, setError } = userSlice.actions

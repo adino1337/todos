@@ -34,7 +34,7 @@ const deleteTodo = async (req, res) => {
   const todo = await Todo.findByIdAndDelete({ _id: taskID })
 
   if (!todo) {
-    res.status(404).json({code: 404, message: "Task not found"})
+    return res.status(404).json({code: 404, message: "Task not found"})
   }
 
   res.status(200).json({ code: 200, todo: todo})
