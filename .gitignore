@@ -5,3 +5,11 @@
 /client_copy
 .env
 .rest
+
+# dependencies
+/todos-native/node_modules/
+
+# Expo
+/todos-native/.expo/
+/todos-native/dist/
+/todos-native/web-build/
