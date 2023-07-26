@@ -8,16 +8,24 @@ export default function LogScreen() {
     const [logForm, setLogForm] = useState(true)
     
         return (
-            <View>
-                <View className='links'>
-                    <Text onPress={()=>setLogForm(true)} className={logForm ? "strong" : ""}>Login</Text>
-                    <Text onPress={()=>setLogForm(false)} className={!logForm ? "strong" : ""}>Register</Text>
-                </View>
-            {logForm?<Login/>:<Register/>}
+            <View style={styles.container}>
+            {logForm?
+            <Login
+                setLogForm={setLogForm}
+            />:
+            <Register
+                setLogForm={setLogForm}
+            />}
             </View>
         )
       }
 
       
+
+      const styles = StyleSheet.create({
+        container: {    
+          flex: 0.5,
+        },
+      });
 
   

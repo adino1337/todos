@@ -8,7 +8,7 @@ export const getTodos = createAsyncThunk(
           method: 'GET',
           headers: {'Authorization': token},
         };
-        const response = await fetch("http://localhost:5000/todos",requestOptions);
+        const response = await fetch("http://192.168.1.203:5000/todos",requestOptions);
         const todos = await response.json();
         return todos
       }
@@ -29,7 +29,7 @@ export const addTodo = createAsyncThunk(
               headers: { 'Content-Type': 'application/json','Authorization': token},
               body: JSON.stringify(newItem)
             };
-            const response = await fetch('http://localhost:5000/todos', requestOptions);
+            const response = await fetch('http://192.168.1.203:5000/todos', requestOptions);
             const todo = await response.json();
             return todo
           }
@@ -62,7 +62,7 @@ export const addTodo = createAsyncThunk(
           headers: { 'Content-Type': 'application/json', 'Authorization': token },
           body: JSON.stringify({ deleted: !itemToUpdate.deleted })
         };
-         await fetch('http://localhost:5000/todos/' + itemToUpdate._id, requestOptions);
+         await fetch('http://192.168.1.203:5000/todos/' + itemToUpdate._id, requestOptions);
          return {mode: "put", id: itemToUpdate._id}
 
       } catch (err) {
@@ -91,6 +91,7 @@ const todosSlice = createSlice({
       .addCase(getTodos.fulfilled, (state, action) => {
         state.loaders.getLoader = false;
         state.todos = action.payload.data;
+        console.log(action.payload.data);
       })
       .addCase(getTodos.rejected, (state) => {
         state.error = "Something went wrong :("

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Todos from './Todos'
+import { Text, StyleSheet, View,Image } from 'react-native';
 
 export default function TodoList(){
   const [mode,setMode] = useState("all")
@@ -9,7 +10,7 @@ export default function TodoList(){
   const handleMode = e => {
     setMode(e.target.value)     
   }  
-     return (
+     return (/*
         <>
         <div className='radioButtons'>
           <label>
@@ -30,7 +31,11 @@ export default function TodoList(){
             
         </div>
 
-        </>
+        </>*/
+        <View>
+        <Text>RADIOBUTTONS</Text>
+        <Todos mode={mode} />
+        </View>
       );
   }
 

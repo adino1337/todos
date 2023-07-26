@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {register, setError} from '../features/userSlice';
-import { StyleSheet, Button, View, TextInput,Text } from 'react-native';
+import { StyleSheet, Button, View, TouchableOpacity,Text } from 'react-native';
+import { Isao } from 'react-native-textinput-effects';
 
-export default function Register(){    
+export default function Register(props){    
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
 
@@ -15,16 +16,20 @@ export default function Register(){
     })
 
 
-    const handleChange = (evt) => {
-        const value = evt.target.value;
-        setForm({
-          ...form,
-          [evt.target.name]: value
-        });
-    }
+    const handleChange = (name, value) => {
+      setForm({
+        ...form,
+        [name]: value,
+      });
+    };
 
     const handleRegister = async (e) => {
       e.preventDefault();
+      
+      if(form.email === "")
+      return dispatch(setError("Email is required"))
+      if(form.password === "")
+      return dispatch(setError("Password is required"))
       if(form.passwordConfirm !== form.password){
         dispatch(setError('Passwords do not match'))
 
@@ -48,52 +53,72 @@ export default function Register(){
         dispatch(setError(err.message))
       }}
     }
-  
-    return (     /* 
-    <form className='loginForm' onSubmit={handleRegister}>
-    
-      <div className='input'>
-        <input type='text' name='email' onChange={handleChange} value={form.email} required/>
-        <span className='placeholder'>Email</span>
-      </div>
-      <div className='input'>
-        <input type='password' name='password' onChange={handleChange} value={form.password} required />
-        <span className='placeholder'>Password</span>
-      </div>
-      <div className='input'>
-        <input type='password' name='passwordConfirm' onChange={handleChange} value={form.passwordConfirm} required />
-        <span className='placeholder'>Confirm password</span>
-      </div>
-      <button>{user.loading ? <div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div> : "Register"}</button>
-        <div id='info'>{user.error}</div>
-      </form>
-      */
-      <View>
-      <TextInput 
-      placeholder='email'      
-      value={form.email}
-      onChangeText={(text) => handleChange('email', text)}
-      />
-      <TextInput 
-      secureTextEntry={true}
-      placeholder='password'
-      value={form.password}
-      onChangeText={(text) => handleChange('password', text)}
-      />
-      <TextInput 
-      secureTextEntry={true}
-      placeholder='passwordConfirm'
-      value={form.passwordConfirm}
-      onChangeText={(text) => handleChange('passwordConfirm', text)}
-      />
-      <Button
-        title="Register"
-        color="#f194ff"
-        onPress={handleRegister}
-      />
-      <Text>{user.error}</Text>
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.form}>
+      <Isao
+    label={'email'}
+    activeColor={'#6e00ef'}
+    borderHeight={4}
+    inputPadding={12}
+    labelHeight={24}
+    passiveColor={'#101010'}
+    inputStyle={{ color: 'black' }}
+    onChangeText={(text) => handleChange('email', text)}
+    value={form.email}
+  />
+  <Isao
+    label={'password'}
+    activeColor={'#6e00ef'}
+    borderHeight={4}
+    inputPadding={12}
+    labelHeight={24}
+    passiveColor={'#101010'}
+    inputStyle={{ color: 'black' }}
+    secureTextEntry={true}
+    onChangeText={(text) => handleChange('password', text)}
+    value={form.password}
+  />
+  <Isao
+    label={'confirm password'}
+    activeColor={'#6e00ef'}
+    borderHeight={4}
+    inputPadding={12}
+    labelHeight={24}
+    passiveColor={'#101010'}
+    inputStyle={{ color: 'black' }}
+    secureTextEntry={true}
+    onChangeText={(text) => handleChange('passwordConfirm', text)}
+    value={form.passwordConfirm}
+  />
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+        <Text style={styles.btnText}>Register</Text>
+      </TouchableOpacity>
+      <Text style={{color:"red"}}>{user.error}</Text>
+      </View>
+      <Text style={{textAlign: 'center'}}>Already have an account? <Text style={{color:"#6e00ef"}} onPress={()=>props.setLogForm(true)}>Login!</Text></Text>
 </View>
     );
   }
   
-
+  const styles = StyleSheet.create({
+    container: {    
+      flex: 1,
+      justifyContent: 'space-around',
+    },
+    form:{
+      padding: 20
+    },
+    button: {
+      alignItems: 'center',
+      backgroundColor: '#6e00ef',
+      padding: 15,
+      marginTop:20
+    },
+    btnText:{
+      color: "white",
+      fontSize: 16,
+      fontWeight: "bold",
+    }
+  });

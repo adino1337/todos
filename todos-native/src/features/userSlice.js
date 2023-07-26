@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const login = createAsyncThunk(
   'user/login',
   async ({ email, password }) => {
@@ -10,9 +10,8 @@ export const login = createAsyncThunk(
         body: JSON.stringify({ email, password }),
       };
 
-      const response = await fetch('http://localhost:5000/todos/user/login', requestOptions);
+      const response = await fetch('http://192.168.1.203:5000/todos/user/login', requestOptions);
       
-
       const data = await response.json();
       return data;
     }
@@ -28,10 +27,10 @@ export const register = createAsyncThunk(
           body: JSON.stringify({ email, password }),
         };
   
-        const response = await fetch('http://localhost:5000/todos/user/register', requestOptions);
+        const response = await fetch('http://192.168.1.203:5000/todos/user/register', requestOptions);
         
-  
         const data = await response.json();
+
         return data;
       }
   );
@@ -67,13 +66,13 @@ const userSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(login.fulfilled,  (state, action) => {
         state.loading = false;
         state.user = action.payload.userObject;
         state.error = action.payload.message;
         if(action.payload.message.length === 0){
         state.loggedOut = false
-        localStorage.setItem("user",JSON.stringify(state));}
+      }
       })
       .addCase(login.rejected, (state) => {
         state.loading = false;
@@ -83,13 +82,13 @@ const userSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(register.fulfilled, (state, action) => {
+      .addCase(register.fulfilled,  (state, action) => {
         state.loading = false;
         state.user = action.payload.userObject;
         state.error = action.payload.message;
         if(action.payload.message.length === 0){
         state.loggedOut = false
-        localStorage.setItem("user",JSON.stringify(state));}
+      }
       })
       .addCase(register.rejected, (state) => {
         state.loading = false;
