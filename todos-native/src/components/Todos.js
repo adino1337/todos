@@ -35,15 +35,13 @@ return (
       return !item.deleted
     if(props.mode == "done")
       return item.deleted           
-  }).map((item) => {
-  const url = item.deleted ? './../images/checked.png' : './../images/notChecked.png'
-  (
+  }).map((item) => (
     <View key={item._id} onPress={(e) => handleUpdate(item,e)}>
     <Text >{item.text}</Text>
     <View>
     <Image
       style={styles.check}
-      source={require(url)}
+      source={require('./../images/notChecked.png')}
     />
     <Image
       style={styles.delete}
@@ -51,7 +49,7 @@ return (
     />
       </View>
       </View>
-  )})}
+  ))}
     </View>}
     </View>
 )

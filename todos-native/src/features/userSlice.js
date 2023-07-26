@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const ip = "192.168.1.15"
+
+
 export const login = createAsyncThunk(
   'user/login',
   async ({ email, password }) => {
@@ -10,7 +14,7 @@ export const login = createAsyncThunk(
         body: JSON.stringify({ email, password }),
       };
 
-      const response = await fetch('http://192.168.1.203:5000/todos/user/login', requestOptions);
+      const response = await fetch(`http://${ip}:5000/todos/user/login`, requestOptions);
       
       const data = await response.json();
       return data;
@@ -27,7 +31,7 @@ export const register = createAsyncThunk(
           body: JSON.stringify({ email, password }),
         };
   
-        const response = await fetch('http://192.168.1.203:5000/todos/user/register', requestOptions);
+        const response = await fetch(`http://${ip}:5000/todos/user/register`, requestOptions);
         
         const data = await response.json();
 
