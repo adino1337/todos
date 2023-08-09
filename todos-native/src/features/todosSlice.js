@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const ip = "192.168.1.15"
+const ip = "192.168.1.203"
 export const getTodos = createAsyncThunk(
     'todos/getTodos',
     async (token) => {  
@@ -42,15 +42,15 @@ export const addTodo = createAsyncThunk(
 
   export const updateTodo = createAsyncThunk(
     'todos/updateTodo',
-    async ({itemToUpdate,e,token}) => {  
-      if(e.target.id === "deleteBtn"){
+    async ({itemToUpdate,action,token}) => {  
+      if(action === "delete"){
         try {
           const requestOptions = {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json', 'Authorization': token },
             
           };
-          await fetch(`http://${ip}:5000/todos` + itemToUpdate._id, requestOptions);
+          await fetch(`http://${ip}:5000/todos/${itemToUpdate._id}`, requestOptions);
           return {mode: "delete", id: itemToUpdate._id}
         } catch (err) {
           return "Something went wrong :(";
@@ -63,7 +63,7 @@ export const addTodo = createAsyncThunk(
           headers: { 'Content-Type': 'application/json', 'Authorization': token },
           body: JSON.stringify({ deleted: !itemToUpdate.deleted })
         };
-         await fetch(`http://${ip}:5000/todos` + itemToUpdate._id, requestOptions);
+         await fetch(`http://${ip}:5000/todos/${itemToUpdate._id}`, requestOptions);
          return {mode: "put", id: itemToUpdate._id}
 
       } catch (err) {
@@ -83,7 +83,11 @@ const todosSlice = createSlice({
     todos: [],    
     error: null,
   },
-  reducers: {},
+  reducers: {
+    todoReset: state => {
+      state.todos= []
+      state.error=  null
+    }},
   extraReducers: (builder) => {
     builder
       .addCase(getTodos.pending, (state) => {
@@ -92,7 +96,6 @@ const todosSlice = createSlice({
       .addCase(getTodos.fulfilled, (state, action) => {
         state.loaders.getLoader = false;
         state.todos = action.payload.data;
-        console.log(action.payload.data);
       })
       .addCase(getTodos.rejected, (state) => {
         state.error = "Something went wrong :("
@@ -130,5 +133,5 @@ const todosSlice = createSlice({
       });
   },
 });
-
+export const { todoReset } = todosSlice.actions
 export default todosSlice.reducer;

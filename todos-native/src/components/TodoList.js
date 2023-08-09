@@ -2,15 +2,11 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Todos from './Todos'
 import { Text, StyleSheet, View,Image } from 'react-native';
+import { RadioButton } from 'react-native-paper';
 
 export default function TodoList(){
   const [mode,setMode] = useState("all")
-
-  const todos = useSelector(state => state.todos)
-  const handleMode = e => {
-    setMode(e.target.value)     
-  }  
-     return (/*
+       return (/*
         <>
         <div className='radioButtons'>
           <label>
@@ -32,8 +28,33 @@ export default function TodoList(){
         </div>
 
         </>*/
-        <View>
-        <Text>RADIOBUTTONS</Text>
+        <View style={{flex: 1}}>
+        <View style={{flexDirection: "row", justifyContent: "space-between", padding: 10}}>
+          <View style={{flexDirection: "row"}}>
+            <Text style={{alignSelf:"center"}}>All</Text>
+            <RadioButton
+              value="all"
+              status={ mode === 'all' ? 'checked' : 'unchecked' }
+              onPress={() => setMode('all')}
+            />
+          </View>
+          <View style={{flexDirection: "row"}}>
+            <Text style={{alignSelf:"center"}}s>Active</Text>
+            <RadioButton
+              value="active"
+              status={ mode === 'active' ? 'checked' : 'unchecked' }
+              onPress={() => setMode('active')}
+            />
+          </View>
+          <View style={{flexDirection: "row"}}>
+            <Text style={{alignSelf:"center"}}s>Done</Text>
+            <RadioButton
+              value="done"
+              status={ mode === 'done' ? 'checked' : 'unchecked' }
+              onPress={() => setMode('done')}
+            />
+          </View>
+        </View>
         <Todos mode={mode} />
         </View>
       );

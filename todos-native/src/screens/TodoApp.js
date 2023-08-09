@@ -15,12 +15,10 @@ export default function TodoApp(){
     dispatch(getTodos(user.user.token))
   }, []);
   
-  console.log(todos)
 
 return (
-  <View>
-    <Text>ToDo's</Text>
-    <TodoList />
-    <Form/>
+  <View style={{flex:1}}>
+    <TodoList style={{flex:1}}/>
+    <Form style={{flex:1}}/>
   </View>
 )}

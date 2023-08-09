@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ip = "192.168.1.15"
+const ip = "192.168.1.203"
 
 
 export const login = createAsyncThunk(
